@@ -1,0 +1,42 @@
+import React from 'react';
+import { graphql } from 'gatsby';
+import styled from 'styled-components';
+import Img from 'gatsby-image';
+
+const SingleMasterStyles = styled.div`
+  display: grid;
+  border: 1px solid red;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-gap: 2rem;
+`;
+
+export default function SingleSlicemasterPage({ data: { slicemaster } }) {
+  return (
+    <SingleMasterStyles>
+      <Img className="image {slicemaster.name}" fluid={slicemaster.image.asset.fluid} alt={slicemaster.name} />
+      <div>
+        <h2 className='mark'>{slicemaster.name}</h2>
+        <p>{slicemaster.description}</p>
+      </div>
+    </SingleMasterStyles>
+  );
+}
+
+export const query = graphql`
+  query($slug: String!) {
+    slicemaster: sanityPerson(slug: { current: { eq: $slug } }) {
+        name
+        description
+        image {
+          asset {
+            fixed(width: 600, height: 200) {
+              ...GatsbySanityImageFixed
+            }
+            fluid(maxWidth: 600) {
+              ...GatsbySanityImageFluid
+            }
+          }
+        }
+    }
+  }
+`;

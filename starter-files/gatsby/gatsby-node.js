@@ -1,6 +1,32 @@
 import path from 'path';
 import fetch from 'isomorphic-fetch';
 
+async function turnSliceMastersIntoPages({ graphql, actions }) {
+  const sliceMastersTemplate = path.resolve('./src/templates/Slicemaster.js');
+  const { data } = await graphql(`
+    query {
+      slicemasters: allSanityPerson {
+        nodes {
+          name
+          description
+          slug {
+            current
+          }
+        }
+      }
+    }
+  `);
+  data.slicemasters.nodes.forEach(slicemaster => {
+    actions.createPage({
+      path: `slicemaster/${slicemaster.slug.current}`,
+      component: sliceMastersTemplate,
+      context: {
+        slug: slicemaster.slug.current,
+      }
+    })
+  });
+}
+
 async function turnPizzasIntoPages({ graphql, actions }) {
   const pizzaTemplate = path.resolve('./src/templates/Pizza.js');
   const { data } = await graphql(`
@@ -77,6 +103,6 @@ export async function sourceNodes(params) {
 
 export async function createPages(params) {
   await Promise.all([turnPizzasIntoPages(params),
-    turnToppingsIntoPages(params)]);
+    turnToppingsIntoPages(params), turnSliceMastersIntoPages(params)]);
 }
 
