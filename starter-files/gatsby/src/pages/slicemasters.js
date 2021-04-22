@@ -8,20 +8,34 @@ const SliceMastersGridStyles = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   gap: 2rem;
-  border: solid red;
+  border: 1rem solid red;
 `;
 
 const SingleSliceMasterGridStyles = styled.div`
-  display: grid;
-  border: solid black;
+  a {
+    text-decoration: none;
+  }
+  .gatsby-image-wrapper {
+    height: 400px;
+  }
+  border: 1rem solid lightgreen;
+  h2 {
+    transform: rotate(-2deg);
+    text-align: center;
+    font-size: 4rem;
+    margin-bottom: -2rem;
+    position: relative;
+    z-index: 2;
+  }
 `;
 
 function SingleSlicemaster({ slicemaster }) {
   return (
     <SingleSliceMasterGridStyles>
       <Link to={`/slicemaster/${slicemaster.slug.current}`}>
-        <h3 className="mark">{slicemaster.name}</h3>
-        <Img className="image {slicemaster.name}" fluid={slicemaster.image.asset.fluid} alt={slicemaster.name} />
+        <h2 className="mark">{slicemaster.name}</h2>
+        <Img className="image {slicemaster.name}"
+        fluid={slicemaster.image.asset.fluid} alt={slicemaster.name} />
         <p>{slicemaster.description}</p>
       </Link>
     </SingleSliceMasterGridStyles>
@@ -31,19 +45,23 @@ function SingleSlicemaster({ slicemaster }) {
 export default function SliceMastersPage({ data }) {
   const slicemasters = data.slicemasters.nodes;
   return (
+    <>
     <SliceMastersGridStyles>
        {slicemasters.map(slicemaster => {
         return (
-          <SingleSlicemaster key={slicemaster.name} slicemaster={slicemaster} />
+          <SingleSlicemaster key={slicemaster.name}
+          slicemaster={slicemaster} />
         );
        })}
     </SliceMastersGridStyles>
+    </>
   );
 }
 
 export const query = graphql`
-  query SliceMastersQuery {
-    slicemasters: allSanityPerson {
+  query($skip: Int = 0, $pageSize: Int = 2) {
+    slicemasters: allSanityPerson(limit: $pageSize, skip: $skip) {
+      totalCount
       nodes {
         name
         slug {
@@ -55,7 +73,7 @@ export const query = graphql`
             fixed(width: 600, height: 200) {
               ...GatsbySanityImageFixed
             }
-            fluid(maxWidth: 600) {
+            fluid(maxWidth: 410) {
               ...GatsbySanityImageFluid
             }
           }

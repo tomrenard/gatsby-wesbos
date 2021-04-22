@@ -5,19 +5,22 @@ import Img from 'gatsby-image';
 
 const SingleMasterStyles = styled.div`
   display: grid;
-  border: 1px solid red;
+  border: 1rem solid red;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   grid-gap: 2rem;
+  div {
+    border: 1rem solid black;
+  }
 `;
 
 export default function SingleSlicemasterPage({ data: { slicemaster } }) {
   return (
     <SingleMasterStyles>
-      <Img className="image {slicemaster.name}" fluid={slicemaster.image.asset.fluid} alt={slicemaster.name} />
-      <div>
-        <h2 className='mark'>{slicemaster.name}</h2>
-        <p>{slicemaster.description}</p>
-      </div>
+        <Img className="image {slicemaster.name}" fluid={slicemaster.image.asset.fluid} alt={slicemaster.name} />
+        <div className="content-slice">
+          <h2 className='mark'>{slicemaster.name}</h2>
+          <p>{slicemaster.description}</p>
+        </div>
     </SingleMasterStyles>
   );
 }
