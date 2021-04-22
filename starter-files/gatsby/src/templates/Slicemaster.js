@@ -2,6 +2,7 @@ import React from 'react';
 import { graphql } from 'gatsby';
 import styled from 'styled-components';
 import Img from 'gatsby-image';
+import SEO from '../components/SEO';
 
 const SingleMasterStyles = styled.div`
   display: grid;
@@ -15,13 +16,16 @@ const SingleMasterStyles = styled.div`
 
 export default function SingleSlicemasterPage({ data: { slicemaster } }) {
   return (
-    <SingleMasterStyles>
-        <Img className="image {slicemaster.name}" fluid={slicemaster.image.asset.fluid} alt={slicemaster.name} />
-        <div className="content-slice">
-          <h2 className='mark'>{slicemaster.name}</h2>
-          <p>{slicemaster.description}</p>
-        </div>
-    </SingleMasterStyles>
+    <>
+      <SEO title={`Say Hi to ${slicemaster.name}`} />
+      <SingleMasterStyles>
+          <Img className="image {slicemaster.name}" fluid={slicemaster.image.asset.fluid} alt={slicemaster.name} />
+          <div className="content-slice">
+            <h2 className='mark'>{slicemaster.name}</h2>
+            <p>{slicemaster.description}</p>
+          </div>
+      </SingleMasterStyles>
+    </>
   );
 }
 
