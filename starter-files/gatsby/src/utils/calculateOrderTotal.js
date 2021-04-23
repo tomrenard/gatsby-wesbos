@@ -1,5 +1,5 @@
-import calculatePizzaPrice from '../utils/calculatePizzaPrice';
-import formatMoney from '../utils/formatMoney';
+import calculatePizzaPrice from './calculatePizzaPrice';
+import formatMoney from './formatMoney';
 
 
 export default function calculateOrderTotal(order, pizzas) {

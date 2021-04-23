@@ -8,7 +8,7 @@ export default function useForm(defaults) {
     if (e.target.type === 'number') {
       value = parseInt(value);
     }
-    setValues({
+    setValue({
       ...values,
       [e.target.name]: value,
     })
