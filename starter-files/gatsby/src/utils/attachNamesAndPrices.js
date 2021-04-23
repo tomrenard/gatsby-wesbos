@@ -1,4 +1,6 @@
 import calculatePizzaPrice from './calculatePizzaPrice';
+import formatMoney from './formatMoney';
+
 
 export default function attachNamesAndPrices(order, pizzas) {
   return (
@@ -8,7 +10,7 @@ export default function attachNamesAndPrices(order, pizzas) {
         ...item,
         name: pizza.name,
         thumbnail: pizza.image.asset.fluid.src,
-        price: calculatePizzaPrice(pizza.price, item.size),
+        price: formatMoney(calculatePizzaPrice(pizza.price, item.size)),
       }
     })
   );
