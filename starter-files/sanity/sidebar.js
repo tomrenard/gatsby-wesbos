@@ -10,7 +10,7 @@ export default function Sidebar() {
       .child(
         S.editor()
           .schemaType('storeSettings')
-          .documentId('randomDocID')
+          .documentId('downtown')
       ),
       ...S.documentTypeListItems().filter(item => item.getId() !== 'storeSettings'),
     ]);
