@@ -16,6 +16,7 @@ export default function OrderPage({ data }) {
   const { values, updateValue } = useForm({
     name: '',
     email: '',
+    syrup: '',
   });
   const { order, addToOrder, removeFromOrder, error, loading, message, submitOrder } = usePizza({
     pizzas,
@@ -29,13 +30,14 @@ export default function OrderPage({ data }) {
     <>
       <SEO title="Order a Pizza!" />
       <OrderStyles onSubmit={submitOrder}>
-        <fieldset>
+        <fieldset disabled={loading}>
           <legend>Your Info</legend>
           <label htmlFor="name">Name</label>
           <input
             type="text"
             name="name"
             id="name"
+            placeholder="Tom"
             value={values.name}
             onChange={updateValue}
           />
@@ -44,11 +46,20 @@ export default function OrderPage({ data }) {
             type="email"
             name="email"
             id="email"
+            placeholder="tom@example.com"
             value={values.email}
             onChange={updateValue}
           />
+          <input
+            className='syrup'
+            type="syrup"
+            name="syrup"
+            id="syrup"
+            value={values.syrup}
+            onChange={updateValue}
+          />
         </fieldset>
-        <fieldset className="menu">
+        <fieldset disabled={loading} className="menu">
           <legend>Menu</legend>
           {pizzas.map((pizza) => (
             <MenuItemStyles key={pizza.id}>
@@ -80,7 +91,7 @@ export default function OrderPage({ data }) {
             </MenuItemStyles>
           ))}
         </fieldset>
-        <fieldset className="order">
+        <fieldset disabled={loading} className="order">
           <legend>Order</legend>
           <PizzaOrder
             order={order}
@@ -88,7 +99,7 @@ export default function OrderPage({ data }) {
             pizzas={pizzas}
           />
         </fieldset>
-        <fieldset>
+        <fieldset disabled={loading}>
           <h3>Your total is {calculateOrderTotal(order, pizzas)}</h3>
           <div>
             {error ? <p>Error: {error}</p> : ''}

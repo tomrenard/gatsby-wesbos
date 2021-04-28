@@ -1,6 +1,9 @@
 import styled from 'styled-components';
 
 const OrderStyles = styled.form`
+  .syrup {
+    display: none;
+  }
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 20px;

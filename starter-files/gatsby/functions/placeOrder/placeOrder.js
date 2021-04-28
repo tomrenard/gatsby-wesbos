@@ -27,11 +27,24 @@ const transporter = nodemailer.createTransport({
     }
 });
 
+async function wait(ms = 0) {
+  return new Promise((resolve, reject) => {
+    setTimeout(resolve, ms);
+  });
+}
+
 exports.handler = async (event, context) => {
   const body = JSON.parse(event.body);
+
+  if(body.syrup) {
+    return {
+      statusCode: 400,
+      body: JSON.stringify({ message: 'wow mamen look like a botitotati' }),
+    }
+  }
+
   const requiredFields = ['email', 'email', 'order'];
   for (const field of requiredFields) {
-    console.log(`Checking that ${field} is good`);
     if(!body[field]) {
       return {
         statusCode: 400,
@@ -39,6 +52,13 @@ exports.handler = async (event, context) => {
       }
     }
   }
+
+  if(!body.order.length) {
+      return {
+        statusCode: 400,
+        body: JSON.stringify({ message: `why order nothing mamen`}),
+      }
+    }
 
   const info = await transporter.sendMail({
     from: "Slick's Slices mamen <slick@example.com>",
