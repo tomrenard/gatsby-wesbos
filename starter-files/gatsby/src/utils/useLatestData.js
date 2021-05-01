@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 
-
 export default function useLatestData() {
   const [hotSlices, setHotSlices] = useState();
   const [slicemasters, setSlicemasters] = useState();
@@ -9,7 +8,7 @@ export default function useLatestData() {
     fetch(process.env.GATSBY_GRAPHQL_ENDPOINT, {
       method: 'POST',
       headers: {
-        'Content-Type': 'applications/json'
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify({
         query: `
@@ -29,7 +28,8 @@ export default function useLatestData() {
     })
       .then(res => res.json())
       .then(res => {
-        console.log(res.data);
+        setHotSlices(res.data.StoreSettings.hotSlices);
+        setSlicemasters(res.data.StoreSettings.slicemaster);
     });
   }, []);
   return {
