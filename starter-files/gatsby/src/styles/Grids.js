@@ -21,7 +21,7 @@ export const SingleGrid = styled.div`
     font-size: 0;
   }
   p {
-    transform: rotate(-2deg) translateY(-50deg);
+    transform: rotate(-2deg) translateY(-130%);
     position: absolute;
     width: 100%;
     left: 0;

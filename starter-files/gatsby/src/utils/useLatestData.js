@@ -3,7 +3,6 @@ import { useState, useEffect } from 'react';
 export default function useLatestData() {
   const [hotSlices, setHotSlices] = useState();
   const [slicemasters, setSlicemasters] = useState();
-
   useEffect(function(){
     fetch(process.env.GATSBY_GRAPHQL_ENDPOINT, {
       method: 'POST',
@@ -17,9 +16,27 @@ export default function useLatestData() {
               name
               slicemaster {
                 name
+                _id
+                image {
+                  asset {
+                    url
+                    metadata {
+                      lqip
+                    }
+                  }
+                }
               }
               hotSlices {
                 name
+                _id
+                image {
+                  asset {
+                    url
+                    metadata {
+                      lqip
+                    }
+                  }
+                }
               }
             }
           }
@@ -30,7 +47,11 @@ export default function useLatestData() {
       .then(res => {
         setHotSlices(res.data.StoreSettings.hotSlices);
         setSlicemasters(res.data.StoreSettings.slicemaster);
-    });
+    })
+      .catch(err => {
+        console.log(err)
+        console.log('Oups error')
+      });
   }, []);
   return {
     hotSlices,
